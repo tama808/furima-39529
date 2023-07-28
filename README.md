@@ -1,24 +1,52 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| family name        | string | null: false |
+| first name         | string | null: false |
+| encrypted_password | string | null: false |
+| email              | string | null: false |
+| date of birth      | date   | null: false |
+| nickname           | string | null: false |
 
-* Ruby version
+### Association
+has_many : 
+has_many : comments
 
-* System dependencies
+## items テーブル
 
-* Configuration
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| product            | string | null: false |
+| description        | text   | null: false |
+| image              | integer| null: false |
+| category           | string | null: false |
+| condition          | string | null: false |
+| seller name        | string | null: false |
+| shipping cost      | integer| null: false |
+| area               | string | null: false |
+| days               | integer| null: false |
+| price              | integer| null: false |
+| commission         | integer| null: false |
+| profit             | integer| null: false |
 
-* Database creation
+### Association
+has_many : 
+has_many : 
 
-* Database initialization
+## users テーブル
 
-* How to run the test suite
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| family name        | string | null: false |
+| first name         | string | null: false |
+| encrypted_password | string | null: false |
+| email              | string | null: false |
+| date of birth      | date   | null: false |
+| nickname           | string | null: false |
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Association
+has_many : 
+has_many : comments
