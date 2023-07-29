@@ -32,8 +32,8 @@ has_many : purchases
 | price             　　　 | integer    | null: false |
 | user                    | references | null: false, foreign_key: true |
 ### Association
-belong_to  : purchases 
-belong_to  : users
+belong_to  : purchase
+belong_to  : user
 
 ## purchase テーブル
 
@@ -43,9 +43,9 @@ belong_to  : users
 | user   | references  | null: false, foreign_key: true |
 
 ### Association
-has_one   : users
-belong_to  : items
-belong_to : shippings
+has_one   : user
+belong_to  : item
+belong_to : shipping
 
 
 
@@ -55,7 +55,7 @@ belong_to : shippings
 | ------------------ | ------    | ----------- |
 | purchase           | references| null: false |
 | postcode           | string    | null: false |
-| prefecture_id      | integer   | null: false,foreign_key: true|
+| prefecture_id      | integer   | null: false |
 | city               | string    | null: false |
 | address            | string    | null: false |
 | tel                | string    | null: false |
