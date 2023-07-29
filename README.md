@@ -16,48 +16,50 @@
 ### Association
 has_many : items
 has_many : purchases
-has_one  : shipping
+
 
 ## items テーブル
 
-| Column                  | Type    | Options     |
-| ----------------------- | ------  | ----------- |
-| product                 | string  | null: false |
-| description             | text    | null: false |
-| category_id             | integer | null: false |
-| condition_id            | integer | null: false |
-| shipping_cost_id        | integer | null: false |
-| prefectures_id          | integer | null: false |
-| shipping_days_id 　　　  | integer | null: false |
-| price             　　　 | integer | null: false |
-| FOREIGN KEY user(users) |references| null: false |
+| Column                  | Type       | Options     |
+| ----------------------- | ------     | ----------- |
+| product                 | string     | null: false |
+| description             | text       | null: false |
+| category_id             | integer    | null: false |
+| condition_id            | integer    | null: false |
+| shipping_cost_id        | integer    | null: false |
+| prefecture_id           | integer    | null: false |
+| shipping_days_id 　　　  | integer    | null: false |
+| price             　　　 | integer    | null: false |
+| user                    | references | null: false, foreign_key: true |
 ### Association
-belong_to  : purchases , users
-
+belong_to  : purchases 
+belong_to  : users
 
 ## purchase テーブル
 
 | Column                  | Type     | Options     |
 | ----------------------- | ------   | ----------- |
-| FOREIGN KEY item(items) |references| null: false |
-| FOREIGN KEY user(users) |references| null: false |
+| item   | references  | null: false, foreign_key: true |
+| user   | references  | null: false, foreign_key: true |
 
 ### Association
 has_one   : users
-has_many  : items
+belong_to  : items
+belong_to : shippings
 
 
 
-## shipping テーブル
+## shippings テーブル
 
 | Column             | Type      | Options     |
 | ------------------ | ------    | ----------- |
 | purchase           | references| null: false |
-| prefectures_id     | integer   | null: false |
+| postcode           | string    | null: false |
+| prefecture_id      | integer   | null: false,foreign_key: true|
 | city               | string    | null: false |
 | address            | string    | null: false |
 | tel                | string    | null: false |
 | building_name      | string    |             |
 
 ### Association
-belong_to : users
+belong_to : purchase
