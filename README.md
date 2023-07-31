@@ -28,14 +28,14 @@ has_many : purchases
 | condition_id            | integer    | null: false |
 | shipping_cost_id        | integer    | null: false |
 | prefecture_id           | integer    | null: false |
-| shipping_days_id 　　　  | integer    | null: false |
+| shipping_day_id 　　　  | integer    | null: false |
 | price             　　　 | integer    | null: false |
 | user                    | references | null: false, foreign_key: true |
 ### Association
-belong_to  : purchase
+has_one    : purchase
 belong_to  : user
 
-## purchase テーブル
+## purchases テーブル
 
 | Column                  | Type     | Options     |
 | ----------------------- | ------   | ----------- |
@@ -43,9 +43,9 @@ belong_to  : user
 | user   | references  | null: false, foreign_key: true |
 
 ### Association
-has_one   : user
+belong_to  : user
 belong_to  : item
-belong_to : shipping
+has_one    : shipping
 
 
 
@@ -53,7 +53,7 @@ belong_to : shipping
 
 | Column             | Type      | Options     |
 | ------------------ | ------    | ----------- |
-| purchase           | references| null: false |
+| purchase           | references| null: false,foreign_key: true |
 | postcode           | string    | null: false |
 | prefecture_id      | integer   | null: false |
 | city               | string    | null: false |
