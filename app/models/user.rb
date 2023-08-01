@@ -4,11 +4,11 @@ class User < ApplicationRecord
   validates :k_family_name, presence: true, format: { with: /\A[ァ-ヶー－]+\z/}
   validates :k_first_name, presence: true, format: { with: /\A[ァ-ヶー－]+\z/}
   validates :birth, presence: true
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :nickname, presence: true
   validate :password_complexity
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable  #条件に合っていればDBに保存する
 
   private
 
