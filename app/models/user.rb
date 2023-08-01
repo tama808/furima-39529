@@ -1,9 +1,9 @@
 class User < ApplicationRecord
-  validates :first_name, presence: true
-  validates :family_name, presence: true
-  validates :k_family_name, presence: true
-  validates :k_first_name, presence: true
-
+  validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥ー]+\z/}
+  validates :family_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥ー]+\z/}
+  validates :k_family_name, presence: true, format: { with: /\A[ァ-ヶー－]+\z/}
+  validates :k_first_name, presence: true, format: { with: /\A[ァ-ヶー－]+\z/}
+  validates :birth, presence: true
   validates :password, presence: true, length: { minimum: 6 }
   validate :password_complexity
 
