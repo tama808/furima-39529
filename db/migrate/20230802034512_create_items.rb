@@ -1,0 +1,17 @@
+class CreateItems < ActiveRecord::Migration[7.0]
+=begin
+  def change
+    create_table :items do |t|
+      t.string :product
+      t.text :description
+      t.integer :category_id
+      t.integer :condition_id
+      t.integer :shipping_cost_id 
+      t.integer :prefecture_id
+      t.integer :shipping_day_id
+      t.integer :price
+      t.references :user
+      t.timestamps
+    end
+  end
+end
