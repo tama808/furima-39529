@@ -1,5 +1,6 @@
 
 class ItemsController < ApplicationController
+=begin
   def index
     @items = Item.all
   end
@@ -23,4 +24,5 @@ class ItemsController < ApplicationController
     @items.destroy
     redirect_to root_path, notice: 'Prototype was successfully destroyed.'
   end
+=end
 end

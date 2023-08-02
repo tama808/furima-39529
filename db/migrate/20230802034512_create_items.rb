@@ -1,4 +1,5 @@
 class CreateItems < ActiveRecord::Migration[7.0]
+=begin
   def change
     create_table :items do |t|
       t.string :product
