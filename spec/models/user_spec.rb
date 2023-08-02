@@ -108,6 +108,18 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password は英字と数字の両方を含む必要があります")
       end
+      it '重複したメールアドレスは登録できない' do
+        @user.save
+        another_user = FactoryBot.build(:user)
+        another_user.email = @user.email
+        another_user.valid?
+        expect(another_user.errors.full_messages).to include('Email has already been taken')
+end
+      it 'メールアドレスに@を含まない場合は登録できない' do
+        @user.email = 'invalid_email.com'  # @を含まない無効なメールアドレス
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid")
+      end
     end
   end
 end
