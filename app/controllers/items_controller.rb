@@ -1,12 +1,16 @@
 
 class ItemsController < ApplicationController
-=begin
   def index
     @items = Item.all
   end
 
   def new
     @items = Item.new
+    @categories = Category.all
+    @shipping_cost = ShippingCost.all
+    @prefecture = Prefecture.all
+    @shipping_day = ShippingDay.all
+    @condition = Condition.all
   end
 
   def create
@@ -22,7 +26,6 @@ class ItemsController < ApplicationController
   def destroy
     @items = Item.find(params[:id])
     @items.destroy
-    redirect_to root_path, notice: 'Prototype was successfully destroyed.'
+    redirect_to root_path, notice: 'item was successfully destroyed.'
   end
-=end
 end
