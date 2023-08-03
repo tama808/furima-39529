@@ -19,7 +19,13 @@ class Item < ApplicationRecord
   validate :image_presence
 
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
-  
+  validate :valid_half_width_number
+
+  def valid_half_width_number
+    if price.present? && price.match?(/\A[0-9]+\z/)
+      errors.add(:price, "は半角数字のみ入力してください")
+    end 
+  end
   def default_id_validation
     errors.add(:base, 'デフォルト値のIDは使用できません。') if category_id == Category.default.id
   end
