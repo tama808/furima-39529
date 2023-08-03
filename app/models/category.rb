@@ -15,6 +15,4 @@ class Category < ActiveHash::Base
   def self.default
     find(1) # デフォルト値のID（ここでは1）を指定
   end
-  include ActiveHash::Associations
-  has_many :items
 end

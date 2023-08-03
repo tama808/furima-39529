@@ -81,7 +81,7 @@ end
 group :production do
   gem 'pg'
 end
-
+gem 'pry'
 gem 'devise'
 gem 'active_hash'
 gem 'mini_magick'

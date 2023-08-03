@@ -1,26 +1,28 @@
 
 class ItemsController < ApplicationController
+  before_action :authenticate_user!, only: [:new,:create]
   def index
     @items = Item.all
   end
 
   def new
-    @items = Item.new
-    @categories = Category.all
-    @shipping_cost = ShippingCost.all
-    @prefecture = Prefecture.all
-    @shipping_day = ShippingDay.all
-    @condition = Condition.all
+    @item = Item.new
+
   end
 
   def create
-    Item.create(item_params)
-    redirect_to '/'
+    @item = Item.new(item_params)
+    if @item.save
+      redirect_to root_path, notice: 'アイテムが正常に作成されました。'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
+
 
   private
   def item_params
-    params.require(:item).permit(:name, :image, :text,:image).merge(user_id: current_user.id)
+    params.require(:item).permit(:product, :description, :category_id, :condition_id, :shipping_cost_id, :prefecture_id, :shipping_day_id, :price, :image).merge(user_id: current_user.id)
   end
 
   def destroy
