@@ -10,11 +10,11 @@ class Item < ApplicationRecord
 
   validates :product, presence: true
   validates :description, presence: true
-  validates :category_id,presence: true, exclusion: { in: [Category.default.id], message: 'はデフォルト値のIDは使用できません。' }
-  validates :condition_id, presence: true, exclusion: { in: [Condition.default.id], message: 'はデフォルト値のIDは使用できません。' }
-  validates :shipping_cost_id, presence: true, exclusion: { in: [Shipping.default.id], message: 'はデフォルト値のIDは使用できません。' }
-  validates :prefecture_id, presence: true, exclusion: { in: [Prefecture.default.id], message: 'はデフォルト値のIDは使用できません。' }
-  validates :shipping_day_id, presence: true, exclusion: { in: [Shipping_day.default.id], message: 'はデフォルト値のIDは使用できません。' }
+  validates :category_id, exclusion: { in: [Category.default.id] }
+  validates :condition_id, exclusion: { in: [Condition.default.id]}
+  validates :shipping_cost_id, exclusion: { in: [ShippingCost.default.id]}
+  validates :prefecture_id, exclusion: { in: [Prefecture.default.id]}
+  validates :shipping_day_id, exclusion: { in: [ShippingDay.default.id]}
   validate :default_id_validation
   validate :image_presence
 
