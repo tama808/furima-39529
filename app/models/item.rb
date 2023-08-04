@@ -11,26 +11,27 @@ class Item < ApplicationRecord
   validates :product, presence: true
   validates :description, presence: true
   validates :category_id, exclusion: { in: [Category.default.id] }
-  validates :condition_id, exclusion: { in: [Condition.default.id]}
-  validates :shipping_cost_id, exclusion: { in: [ShippingCost.default.id]}
-  validates :prefecture_id, exclusion: { in: [Prefecture.default.id]}
-  validates :shipping_day_id, exclusion: { in: [ShippingDay.default.id]}
+  validates :condition_id, exclusion: { in: [Condition.default.id] }
+  validates :shipping_cost_id, exclusion: { in: [ShippingCost.default.id] }
+  validates :prefecture_id, exclusion: { in: [Prefecture.default.id] }
+  validates :shipping_day_id, exclusion: { in: [ShippingDay.default.id] }
   validate :default_id_validation
   validate :image_presence
 
-  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
-  validate :valid_half_width_number
+  validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
 
+  validate :valid_half_width_number
   def valid_half_width_number
-    if price.present? && price.match?(/\A[0-9]+\z/)
+    if price.present? && !price.to_s.match?(/\A[0-9]+\z/)
       errors.add(:price, "は半角数字のみ入力してください")
-    end 
+    end
   end
+
   def default_id_validation
     errors.add(:base, 'デフォルト値のIDは使用できません。') if category_id == Category.default.id
   end
 
   def image_presence
     errors.add(:image, 'を1枚つける必要があります。') unless image.attached?
- end
+  end
 end
