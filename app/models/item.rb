@@ -34,4 +34,9 @@ class Item < ApplicationRecord
   def image_presence
     errors.add(:image, 'を1枚つける必要があります。') unless image.attached?
   end
+
+  def sold_out?
+    # 購入履歴に紐づく注文が存在し、かつ注文された数が在庫と同じか大きい場合は売り切れと判断する
+    orders.present? && orders.sum(:quantity) >= 1
+  end
 end
