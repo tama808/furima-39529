@@ -50,16 +50,40 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Prefecture is reserved")
       end
 
+
       it 'shipping_day_idが空では登録できない' do
         @item.shipping_day_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping day is reserved")
       end
 
-      it 'priceが空では登録できない' do
-        @item.price = nil
+      it 'Priceに半角数字以外が含まれていると出品できない' do
+        @item.price = "１０００" # 全角数字を入れてみる
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank")
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+    
+      it 'Priceが299円以下では出品できない' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+      end
+    
+      it 'Priceが10,000,000円以上では出品できない' do
+        @item.price = 10_000_000
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      end
+      it '画像が必須であること' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Image を1枚つける必要があります。")
+      end
+
+      it 'userが必須であること' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
     end
   end
