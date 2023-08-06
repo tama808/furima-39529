@@ -46,10 +46,10 @@ class ItemsController < ApplicationController
     end
   end
 
-  # def destroy
-    # @item.destroy
-    # redirect_to root_path, notice: '商品が正常に削除されました。'
-  # end
+  def destroy
+     @item.destroy
+     redirect_to root_path, notice: '商品が正常に削除されました。'
+   end
 
   private
 
