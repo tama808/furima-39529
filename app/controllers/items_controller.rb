@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_item, only: [:edit, :update, :destroy]
+
   def index
     @items = Item.order(created_at: :desc)
   end
@@ -23,27 +25,13 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
-    # もしログインしていない場合はログインページにリダイレクトする
-    unless user_signed_in?
-      redirect_to new_user_session_path, alert: 'ログインしてください。'
-      return
-    end
-
     # もしログインユーザーと商品の出品者が一致しない場合はトップページにリダイレクトする
     if @item.user != current_user
       redirect_to root_path, alert: '他のユーザーの商品は編集できません。'
     end
   end
 
-    def update
-    @item = Item.find(params[:id])
-    # もしログインしていない場合はログインページにリダイレクトする
-    unless user_signed_in?
-      redirect_to new_user_session_path, alert: 'ログインしてください。'
-      return
-    end
-
+  def update
     # もしログインユーザーと商品の出品者が一致しない場合はトップページにリダイレクトする
     if @item.user != current_user
       redirect_to root_path, alert: '他のユーザーの商品は編集できません。'
@@ -58,14 +46,18 @@ class ItemsController < ApplicationController
     end
   end
 
+  # def destroy
+    # @item.destroy
+    # redirect_to root_path, notice: '商品が正常に削除されました。'
+  # end
+
   private
+
   def item_params
     params.require(:item).permit(:product, :description, :category_id, :condition_id, :shipping_cost_id, :prefecture_id, :shipping_day_id, :price, :image).merge(user_id: current_user.id)
   end
 
-  def destroy
+  def set_item
     @item = Item.find(params[:id])
-    @item.destroy
-    redirect_to root_path, notice: '商品が正常に削除されました。'
   end
 end
