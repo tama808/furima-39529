@@ -1,6 +1,5 @@
-
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new,:create]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   def index
     @items = Item.order(created_at: :desc)
   end
@@ -23,18 +22,41 @@ class ItemsController < ApplicationController
     @category_name = @item.category.name
   end
 
-  # def edit
-  #   @item = Item.find(params[:id])
-  # end
+  def edit
+    @item = Item.find(params[:id])
+    # もしログインしていない場合はログインページにリダイレクトする
+    unless user_signed_in?
+      redirect_to new_user_session_path, alert: 'ログインしてください。'
+      return
+    end
 
-  # def update
-  #   @item = Item.find(params[:id])
-  #   if @item.update(item_params)
-  #     redirect_to @item, notice: '商品が正常に更新されました。'
-  #   else
-  #     render :edit, status: :unprocessable_entity
-  #   end
-  # end
+    # もしログインユーザーと商品の出品者が一致しない場合はトップページにリダイレクトする
+    if @item.user != current_user
+      redirect_to root_path, alert: '他のユーザーの商品は編集できません。'
+    end
+  end
+
+    def update
+    @item = Item.find(params[:id])
+    # もしログインしていない場合はログインページにリダイレクトする
+    unless user_signed_in?
+      redirect_to new_user_session_path, alert: 'ログインしてください。'
+      return
+    end
+
+    # もしログインユーザーと商品の出品者が一致しない場合はトップページにリダイレクトする
+    if @item.user != current_user
+      redirect_to root_path, alert: '他のユーザーの商品は編集できません。'
+      return
+    end
+
+    if @item.update(item_params)
+      redirect_to @item, notice: '商品が正常に更新されました。'
+    else
+      # エラーがある場合はエラーメッセージを表示して編集ページに戻る
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   private
   def item_params
@@ -42,8 +64,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @items = Item.find(params[:id])
-    @items.destroy
-    redirect_to root_path, notice: 'item was successfully destroyed.'
+    @item = Item.find(params[:id])
+    @item.destroy
+    redirect_to root_path, notice: '商品が正常に削除されました。'
   end
 end
