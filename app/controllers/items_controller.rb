@@ -54,6 +54,7 @@ class ItemsController < ApplicationController
       redirect_to root_path, alert: '商品の削除に失敗しました。'
     end
   end
+  
   private
 
   def item_params

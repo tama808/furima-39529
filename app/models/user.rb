@@ -6,7 +6,6 @@ class User < ApplicationRecord
   validates :birth, presence: true
   validates :nickname, presence: true
   validate :password_complexity
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable  #条件に合っていればDBに保存する
 
