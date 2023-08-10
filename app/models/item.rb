@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :prefecture, foreign_key: 'prefecture_id', class_name: 'Prefecture'
   belongs_to_active_hash :shipping_day, foreign_key: 'shipping_day_id', class_name: 'ShippingDay'
   has_one_attached :image
-  has_one :purchase
+  has_many :purchases
 
   validates :product, presence: true
   validates :description, presence: true
@@ -37,6 +37,6 @@ class Item < ApplicationRecord
   end
 
   def sold_out?
-    purchase.exists?(user_id: current_user.id, item_id: self.id)
+    purchases.any?
   end
 end
