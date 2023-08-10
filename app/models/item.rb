@@ -37,7 +37,6 @@ class Item < ApplicationRecord
   end
 
   def sold_out?
-    # 購入履歴に紐づく注文が存在し、かつ注文された数が在庫と同じか大きい場合は売り切れと判断する
-    orders.present? && orders.sum(:quantity) >= 1
+    purchase.exists?(user_id: current_user.id, item_id: self.id)
   end
 end

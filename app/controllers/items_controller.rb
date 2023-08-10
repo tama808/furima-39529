@@ -4,6 +4,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order(created_at: :desc)
+    @current_user = current_user
   end
 
   def new
