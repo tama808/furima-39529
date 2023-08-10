@@ -1,38 +1,31 @@
-class PurchaseShipping < ApplicationRecord
+class PurchaseShipping
   include ActiveModel::Model
-  attr_accessor :prefectures_id, :city, :address, :tel, :building_name, :postcode, :purchase_id, :item, :user,
+  attr_accessor :item_id, :user_id, :postcode, :prefecture_id, :city, :address, :tel, :building_name
 
   with_options presence: true do
-    validates :prefectures_id
+    validates :prefecture_id
     validates :city
     validates :address
     validates :tel
     validates :building_name
     validates :postcode
-    validates :purchase_id
-    validates :item
-    validates :user
   end
-  def save
-    return false unless valid?
-    
-# PurchaseShipping レコードを作成して保存する
-purchase_shipping = ::Shipping.new(
-  prefectures_id: prefectures_id,
-  city: city,
-  address: address,
-  tel: tel,
-  building_name: building_name,
-  postcode: postcode
-  # 他のカラムも同様に追加する
-)
 
-# purchase_shipping レコードの保存を試みる
-if purchase_shipping.save
-  true
-else
-  errors.merge!(purchase_shipping.errors)  # バリデーションエラーメッセージをコピー
-  false
+  def save
+    
+    purchase = Purchase.create(user_id: user_id,item_id: item_id)
+      Shipping.create(
+        postcode: postcode,
+        prefecture_id: prefecture_id,
+        city: city,
+        building_name: building_name,
+        address: address,
+        tel: tel,
+        purchase_id: purchase.id
+      )
+  end
 end
-end
-end
+
+
+
+

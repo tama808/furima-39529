@@ -7,7 +7,7 @@ class CreateShipping < ActiveRecord::Migration[7.0]
       t.string     :city, null: false
       t.string     :address, null: false
       t.string     :tel, null: false
-      t.string     :building_name, null: false
+      t.string     :building_name
       t.timestamps
     end
   end
