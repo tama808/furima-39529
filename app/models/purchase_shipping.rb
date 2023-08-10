@@ -1,6 +1,6 @@
 class PurchaseShipping
   include ActiveModel::Model
-  attr_accessor :item_id, :user_id, :postcode, :prefecture_id, :city, :address, :tel, :building_name
+  attr_accessor :item_id, :user_id, :postcode, :prefecture_id, :city, :address, :tel, :building_name, :token
 
   with_options presence: true do
     validates :prefecture_id
@@ -9,6 +9,7 @@ class PurchaseShipping
     validates :tel
     validates :building_name
     validates :postcode
+
   end
 
   def save
