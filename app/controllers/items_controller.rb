@@ -28,13 +28,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    
-    if user_signed_in? && (current_user == @item.user || @item.sold_out?)
-      # ユーザーがログインしており、かつ出品者本人であるかまたは商品が購入済みの場合
-      render :show
-    else
-      redirect_to root_path, alert: 'この商品は購入されていないか、他の出品者の商品です。'
-    end
+
   end
 
  def edit
