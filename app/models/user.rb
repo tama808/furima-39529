@@ -8,7 +8,11 @@ class User < ApplicationRecord
   validates :nickname, presence: true
   validate :password_complexity
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable  #条件に合っていればDBに保存する
+         :recoverable, :rememberable, :validatable
+
+  def has_purchased?(item)
+    purchases.exists?(item: item)
+  end
 
   private
 

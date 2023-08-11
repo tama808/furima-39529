@@ -9,7 +9,7 @@
     <div class="item-img-content">
       <%= image_tag @item.image, class: "item-box-img" %>
       <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <% if @item.sold_out? %>
+      <% if @item.purchase != nil %> 
         <div class="sold-out">
           <span>Sold Out!!</span>
         </div>
@@ -25,16 +25,13 @@
       </span>
     </div>
 
-<% if current_user && @item.sold_out? %>
-  <!-- Do nothing or show a message for sold out items -->
-<% elsif current_user %>
-  <% if current_user == @item.user %>
+<% if user_signed_in? && @item.purchase == nil %>
+
+   <% if current_user == @item.user %>
     <%= link_to "商品の編集", edit_item_path(@item), data: { turbo: false }, class: "item-red-btn" %>
     <p class="or-text">or</p>
     <%= link_to "削除", item_path(@item), data: { turbo_method: :delete, confirm: "本当に削除しますか？" }, class: "item-destroy" %>
-  <% elsif @item.sold_out? || current_user.has_purchased?(@item) %>
-    <!-- 購入済みの商品または売り切れの場合は何も表示しない -->
-  else
+  <% else %>
     <%= link_to "購入画面に進む", item_purchases_path(@item), data: { turbo: false }, class: "item-red-btn" %>
   <% end %>
 <% end %>

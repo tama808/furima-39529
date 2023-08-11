@@ -2,11 +2,11 @@ class PurchasesController < ApplicationController
   before_action :authenticate_user!, except: :index
   before_action :check_login_status, only: :index
   before_action :check_access, only: :index
+  before_action :set_item, only: [:index, :create]
 
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @purchase = Purchase.new
-    @item = Item.find(params[:item_id])
     @purchase_shipping = PurchaseShipping.new
     # 購入済み商品の場合、アクセスを拒否してトップページにリダイレクト
     if @item.sold_out?
@@ -19,7 +19,6 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @purchase_shipping = PurchaseShipping.new(purchase_shipping_params)
     if @purchase_shipping.valid?
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
@@ -36,6 +35,9 @@ class PurchasesController < ApplicationController
   end
 
   private
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
   def purchase_shipping_params
     item = Item.find(params[:item_id]) # アイテムを取得
