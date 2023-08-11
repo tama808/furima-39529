@@ -1,10 +1,15 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_item, only: [:edit, :update, :destroy]
-
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
   def index
     @items = Item.order(created_at: :desc)
     @current_user = current_user
+     # セッションに購入済み商品の情報がある場合は、セッションをクリアしてトップページにリダイレクト
+  if session[:purchased_item_id].present?
+    flash[:notice] = '商品は購入されました。'
+    session[:purchased_item_id] = nil
+    redirect_to root_path
+  end
   end
 
   def new
@@ -14,6 +19,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     if @item.save
+      session[:purchased_item_id] = @item.id 
       redirect_to root_path, notice: 'アイテムが正常に作成されました。'
     else
       render :new, status: :unprocessable_entity
@@ -22,15 +28,22 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    @category_name = @item.category.name
-  end
-
-  def edit
-    # もしログインユーザーと商品の出品者が一致しない場合はトップページにリダイレクトする
-    if @item.user != current_user
-      redirect_to root_path, alert: '他のユーザーの商品は編集できません。'
+    
+    if user_signed_in? && (current_user == @item.user || @item.sold_out?)
+      # ユーザーがログインしており、かつ出品者本人であるかまたは商品が購入済みの場合
+      render :show
+    else
+      redirect_to root_path, alert: 'この商品は購入されていないか、他の出品者の商品です。'
     end
   end
+
+ def edit
+  @item = Item.find(params[:id])
+  
+  if @item.user != current_user || @item.sold_out?
+    redirect_to root_path, alert: 'この商品は編集できません。'
+  end
+ end
 
   def update
     # もしログインユーザーと商品の出品者が一致しない場合はトップページにリダイレクトする
