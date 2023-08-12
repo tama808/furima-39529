@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :purchases
+  has_many  :items
   validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/}
   validates :family_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/}
   validates :k_family_name, presence: true, format: { with: /\A[ァ-ヶー－]+\z/}
@@ -6,9 +8,12 @@ class User < ApplicationRecord
   validates :birth, presence: true
   validates :nickname, presence: true
   validate :password_complexity
-
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable  #条件に合っていればDBに保存する
+         :recoverable, :rememberable, :validatable
+
+  def has_purchased?(item)
+    purchases.exists?(item: item)
+  end
 
   private
 

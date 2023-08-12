@@ -7,6 +7,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :prefecture, foreign_key: 'prefecture_id', class_name: 'Prefecture'
   belongs_to_active_hash :shipping_day, foreign_key: 'shipping_day_id', class_name: 'ShippingDay'
   has_one_attached :image
+  has_one :purchase
 
   validates :product, presence: true
   validates :description, presence: true
@@ -33,10 +34,5 @@ class Item < ApplicationRecord
 
   def image_presence
     errors.add(:image, 'を1枚つける必要があります。') unless image.attached?
-  end
-
-  def sold_out?
-    # 購入履歴に紐づく注文が存在し、かつ注文された数が在庫と同じか大きい場合は売り切れと判断する
-    orders.present? && orders.sum(:quantity) >= 1
   end
 end
