@@ -1,14 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe PurchaseShipping, type: :model do
+  describe 'バリデーション' do
   before do
-
-    @purchase_shipping = FactoryBot.build(:purchase_shipping)
+    user = FactoryBot.create(:user) 
+    item = FactoryBot.create(:item) 
+    @purchase_shipping = FactoryBot.build(:purchase_shipping, user_id: user.id, item_id: item.id) 
   end
   
-  describe 'バリデーション' do
     context '新規登録がうまくいくとき' do
       it '正しい属性を持つ場合は有効であること' do
+        expect(@purchase_shipping).to be_valid
+      end
+      it '建物名は任意であること' do
+        @purchase_shipping.building_name = ''
         expect(@purchase_shipping).to be_valid
       end
     end
@@ -56,10 +61,6 @@ RSpec.describe PurchaseShipping, type: :model do
       expect(@purchase_shipping.errors.full_messages).to include("Tel は10桁以上11桁以内の半角数値を入力してください")
     end
 
-    it '建物名は任意であること' do
-      @purchase_shipping.building_name = ''
-      expect(@purchase_shipping).to be_valid
-    end
     it 'user_idが空だと購入できない' do
       @purchase_shipping.user_id = ''
       @purchase_shipping.valid?

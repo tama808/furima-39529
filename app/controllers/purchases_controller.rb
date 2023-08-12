@@ -6,7 +6,6 @@ class PurchasesController < ApplicationController
 
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @purchase = Purchase.new
     @purchase_shipping = PurchaseShipping.new
     # 購入済み商品の場合、アクセスを拒否してトップページにリダイレクト
     if @item.sold_out?
