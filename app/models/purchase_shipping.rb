@@ -8,10 +8,10 @@ class PurchaseShipping
     validates :address
     validates :tel
     validates :postcode
+    validates :building_name, allow_blank: true
     validates :token
     validates :item_id
     validates :user_id
-    validates :building_name, allow_blank: true
   end
   validates :prefecture_id, presence: true, exclusion: { in: [Prefecture.default.id], message: 'は「---」を選択できません' }
     validates :postcode, format: { with: /\A\d{3}-\d{4}\z/, message: "は「3桁ハイフン4桁」の形式で入力してください" }

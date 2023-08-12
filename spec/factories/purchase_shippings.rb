@@ -1,15 +1,14 @@
 FactoryBot.define do
   factory :purchase_shipping do
-    postcode { "#{Faker::Number.between(from: 100, to: 999)}-#{Faker::Number.between(from: 1000, to: 9999)}" }
+    postcode { '153-0063' }
     prefecture_id { 2 }
-    city { Faker::Address.city }
-    address { Faker::Address.street_address }
-    building_name { nil }
-    tel { Faker::PhoneNumber.cell_phone.gsub(/\D/, '') }
-
-    # user と item の関連付け
-    association :user
-    association :item
+    city { 'test'}
+    address { 'test'  }
+    building_name { '' }
+    tel {  '12345123451' }
+    token { 'sample_token' }
+    user_id{ 'sample_id' }
+    item_id{ 'sample_id' }
   end
 end
 

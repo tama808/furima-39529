@@ -9,5 +9,7 @@ FactoryBot.define do
     k_family_name         {'ヤマモト'}
     first_name            {'陸'}
     k_first_name          {'リク'}
+  
   end
+ 
 end
