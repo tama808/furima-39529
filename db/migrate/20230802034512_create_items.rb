@@ -12,7 +12,5 @@ def change
       t.references :user , null: false
       t.timestamps
     end
-
-    add_foreign_key :items, :categories, column: :category_id
   end
 end
