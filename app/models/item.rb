@@ -35,4 +35,7 @@ class Item < ApplicationRecord
   def image_presence
     errors.add(:image, 'を1枚つける必要があります。') unless image.attached?
   end
+  def sold_out?
+    purchase.present?
+  end
 end
