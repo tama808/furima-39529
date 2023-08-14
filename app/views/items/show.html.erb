@@ -43,7 +43,7 @@
     <tr>
       <th class="detail-item">出品者</th>
   <% seller = User.find_by(id: @item.user_id) %>
-  <td class="detail-value"><%= "#{seller.family_name} #{seller.first_name}" if seller %></td>
+   <td class="detail-value"><%= seller.nickname %></td>
 </tr>
     <tr>
       <th class="detail-item">カテゴリー</th>
