@@ -8,9 +8,6 @@ class Condition < ActiveHash::Base
     { id: 6, name: '傷や汚れあり' },
     { id: 7, name: '全体的に状態が悪い' }
   ]
-  def self.default
-    find(1) # デフォルト値のID（ここでは1）を指定
-  end
   include ActiveHash::Associations
   has_many :items
 end

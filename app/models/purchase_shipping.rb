@@ -3,19 +3,16 @@ class PurchaseShipping
   attr_accessor :item_id, :user_id, :postcode, :prefecture_id, :city, :address, :tel, :building_name, :token
 
   with_options presence: true do
-    validates :prefecture_id
     validates :city
     validates :address
-    validates :tel
-    validates :postcode
     validates :building_name, allow_blank: true
     validates :token
     validates :item_id
     validates :user_id
   end
-  validates :prefecture_id, presence: true, exclusion: { in: [Prefecture.default.id], message: 'は「---」を選択できません' }
-    validates :postcode, format: { with: /\A\d{3}-\d{4}\z/, message: "は「3桁ハイフン4桁」の形式で入力してください" }
-    validates :tel, format: { with: /\A\d{10,11}\z/, message: "は10桁以上11桁以内の半角数値を入力してください" }
+    validates :prefecture_id, numericality: { other_than: 1 }
+    validates :postcode, presence: true,format: { with: /\A\d{3}-\d{4}\z/, message: "は「3桁ハイフン4桁」の形式で入力してください" }
+    validates :tel, presence: true, format: { with: /\A\d{10,11}\z/, message: "は10桁以上11桁以内の半角数値を入力してください" }
 
   def save
     

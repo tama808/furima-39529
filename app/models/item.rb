@@ -11,11 +11,11 @@ class Item < ApplicationRecord
 
   validates :product, presence: true
   validates :description, presence: true
-  validates :category_id,presence: true, exclusion: { in: [Category.default.id] }
-  validates :condition_id,presence: true,  exclusion: { in: [Condition.default.id] }
-  validates :shipping_cost_id,presence: true,  exclusion: { in: [ShippingCost.default.id] }
-  validates :prefecture_id,presence: true,  exclusion: { in: [Prefecture.default.id] }
-  validates :shipping_day_id,presence: true,  exclusion: { in: [ShippingDay.default.id] }
+  validates :category_id,numericality: { other_than: 1 }
+  validates :condition_id,numericality: { other_than: 1 }
+  validates :shipping_cost_id,numericality: { other_than: 1 }
+  validates :prefecture_id,numericality: { other_than: 1 }
+  validates :shipping_day_id,numericality: { other_than: 1 }
   validate :default_id_validation
   validate :image_presence
 

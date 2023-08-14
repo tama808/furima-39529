@@ -12,7 +12,4 @@ class Category < ActiveHash::Base
     { id: 10, name: 'ハンドメイド' },
     { id: 11, name: 'その他' }
   ]
-  def self.default
-    find(1) # デフォルト値のID（ここでは1）を指定
-  end
 end

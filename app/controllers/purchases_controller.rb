@@ -18,6 +18,7 @@ class PurchasesController < ApplicationController
   end
 
   def create
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @purchase_shipping = PurchaseShipping.new(purchase_shipping_params)
     if @purchase_shipping.valid?
       Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
