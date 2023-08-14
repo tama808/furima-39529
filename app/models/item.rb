@@ -16,7 +16,6 @@ class Item < ApplicationRecord
   validates :shipping_cost_id,numericality: { other_than: 1 }
   validates :prefecture_id,numericality: { other_than: 1 }
   validates :shipping_day_id,numericality: { other_than: 1 }
-  validate :default_id_validation
   validate :image_presence
 
   validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
@@ -26,10 +25,6 @@ class Item < ApplicationRecord
     if price.present? && !price.to_s.match?(/\A[0-9]+\z/)
       errors.add(:price, "は半角数字のみ入力してください")
     end
-  end
-
-  def default_id_validation
-    errors.add(:base, 'デフォルト値のIDは使用できません。') if category_id == Category.default.id
   end
 
   def image_presence
