@@ -22,7 +22,7 @@ RSpec.describe PurchaseShipping, type: :model do
       it '郵便番号が必須であること' do
         @purchase_shipping.postcode = ''
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Postcode can't be blank")
+        expect(@purchase_shipping.errors.full_messages).to include("郵便番号を入力してください")
       end
 
     it '無効な郵便番号形式の場合は無効であること' do
@@ -34,80 +34,80 @@ RSpec.describe PurchaseShipping, type: :model do
     it '都道府県が必須であること' do
       @purchase_shipping.prefecture_id = ''
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Prefecture can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("都道府県は数値で入力してください")
     end
 
     it '市区町村が必須であること' do
       @purchase_shipping.city = ''
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("City can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("市区町村を入力してください")
     end
 
     it '番地が必須であること' do
       @purchase_shipping.address = ''
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Address can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("住所を入力してください")
     end
 
     it '電話番号が必須であること' do
       @purchase_shipping.tel = ''
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Tel can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("電話番号を入力してください")
     end
 
     it '無効な電話番号形式の場合は無効であること' do
       @purchase_shipping.tel = '123-4567-8901'
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Tel は10桁以上11桁以内の半角数値を入力してください")
+      expect(@purchase_shipping.errors.full_messages).to include("電話番号は10桁以上11桁以内の半角数値を入力してください")
     end
 
     it 'user_idが空だと購入できない' do
       @purchase_shipping.user_id = ''
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("User can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("Userを入力してください")
     end
 
     it 'item_idが空だと購入できない' do
       @purchase_shipping.item_id = ''
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Item can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("Itemを入力してください")
     end
 
     it '都道府県に「---」が選択されている場合は購入できない' do
       @purchase_shipping.prefecture_id = 1
 
     @purchase_shipping.valid?
-    expect(@purchase_shipping.errors.full_messages).to include("Prefecture は「---」を選択できません")
+    expect(@purchase_shipping.errors.full_messages).to include("都道府県は1以外の値にしてください")
     end
 
     it '電話番号が9桁以下では購入できない' do
       @purchase_shipping.tel = '123456789' # 9桁
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Tel は10桁以上11桁以内の半角数値を入力してください")
+      expect(@purchase_shipping.errors.full_messages).to include("電話番号は10桁以上11桁以内の半角数値を入力してください")
     end
 
     it '電話番号が12桁以上では購入できない' do
       @purchase_shipping.tel = '123456789012' # 12桁
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Tel は10桁以上11桁以内の半角数値を入力してください")
+      expect(@purchase_shipping.errors.full_messages).to include("電話番号は10桁以上11桁以内の半角数値を入力してください")
     end
 
     it 'tokenが空では購入できない' do
       @purchase_shipping.token = nil
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Token can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("トークンを入力してください")
     end
 
     it 'userが紐付いていなければ購入できない' do
       @purchase_shipping.user_id = nil
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("User can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("Userを入力してください")
     end
 
     it 'itemが紐付いていなければ購入できない' do
       @purchase_shipping.item_id = nil
       @purchase_shipping.valid?
-      expect(@purchase_shipping.errors.full_messages).to include("Item can't be blank")
+      expect(@purchase_shipping.errors.full_messages).to include("Itemを入力してください")
      end
     end
   end

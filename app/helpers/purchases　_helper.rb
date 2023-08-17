@@ -1,2 +1,0 @@
-module Purchases　Helper
-end

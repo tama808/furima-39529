@@ -12,7 +12,7 @@ module Furima39529
     config.load_defaults 7.0
     config.active_storage.variant_processor = :mini_magick
    # 日本語の言語設定
-   config.i18n.default_locale = :ja
+  config.i18n.default_locale = :ja
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
